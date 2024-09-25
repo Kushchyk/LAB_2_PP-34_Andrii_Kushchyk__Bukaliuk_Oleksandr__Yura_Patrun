@@ -112,7 +112,7 @@ int main(void) {
 
 			current_time = HAL_GetTick();
 			uint32_t hold_duration = current_time - button_press_time;
-			if (hold_duration < 2000) {
+			if (hold_duration > 20 && hold_duration < 2000) {
 				TIM_DC = 100;
 				htim4.Instance->CCR1 = TIM_DC;
 				htim4.Instance->CCR2 = TIM_DC;
