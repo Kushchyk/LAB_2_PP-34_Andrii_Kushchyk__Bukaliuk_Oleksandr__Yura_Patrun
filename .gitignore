@@ -1,0 +1,13 @@
+.DS_Store
+.cproject
+.mxproject
+.project
+.settings/
+Debug
+Release
+build/
+*.elf.*
+.settings
+.mxproject
+*.launch
+.vscode
