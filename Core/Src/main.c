@@ -92,6 +92,12 @@ int main(void) {
 	uint32_t button_press_time = 0;
 	uint32_t current_time = 0;
 
+	uint16_t TIM_DC = 1;
+	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_1);
+	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_2);
+	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
+	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
+
 	/* USER CODE END 2 */
 
 	/* Infinite loop */
@@ -105,9 +111,40 @@ int main(void) {
 			}
 
 			current_time = HAL_GetTick();
+			uint32_t hold_duration = current_time - button_press_time;
+			if (hold_duration < 2000) {
+				TIM_DC = 100;
+				htim4.Instance->CCR1 = TIM_DC;
+				htim4.Instance->CCR2 = TIM_DC;
+				htim4.Instance->CCR3 = 0;
+				htim4.Instance->CCR4 = 0;
 
-		} else
-		{
+			}
+			else if (hold_duration >= 2000 && hold_duration < 4000) {
+				TIM_DC = 400;
+				htim4.Instance->CCR1 = 0;
+				htim4.Instance->CCR2 = 0;
+				htim4.Instance->CCR3 = TIM_DC;
+				htim4.Instance->CCR4 = TIM_DC;
+			}
+			else if (hold_duration >= 4000 && hold_duration < 6000) {
+				TIM_DC = 1000;
+				htim4.Instance->CCR1 = TIM_DC;
+				htim4.Instance->CCR2 = TIM_DC;
+				htim4.Instance->CCR3 = TIM_DC;
+				htim4.Instance->CCR4 = TIM_DC;
+			}
+			else if (hold_duration >= 6000) {
+				TIM_DC = 0;
+				htim4.Instance->CCR1 = TIM_DC;
+				htim4.Instance->CCR2 = TIM_DC;
+				htim4.Instance->CCR3 = TIM_DC;
+				htim4.Instance->CCR4 = TIM_DC;
+			}
+
+
+		}
+		else {
 			if (button_press_time > 0) {
 				button_press_time = 0;
 			}
