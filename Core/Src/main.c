@@ -128,7 +128,7 @@ int main(void) {
 				htim4.Instance->CCR4 = TIM_DC;
 			}
 			else if (hold_duration >= 4000 && hold_duration < 6000) {
-				TIM_DC = 1000;
+				TIM_DC = 999;
 				htim4.Instance->CCR1 = TIM_DC;
 				htim4.Instance->CCR2 = TIM_DC;
 				htim4.Instance->CCR3 = TIM_DC;
