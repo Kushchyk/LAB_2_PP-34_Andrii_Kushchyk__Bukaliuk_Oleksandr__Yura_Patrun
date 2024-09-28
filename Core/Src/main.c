@@ -1,20 +1,20 @@
 /* USER CODE BEGIN Header */
 /**
-  ******************************************************************************
-  * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
-  *
-  * Copyright (c) 2024 STMicroelectronics.
-  * All rights reserved.
-  *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
-  *
-  ******************************************************************************
-  */
+ ******************************************************************************
+ * @file           : main.c
+ * @brief          : Main program body
+ ******************************************************************************
+ * @attention
+ *
+ * Copyright (c) 2024 STMicroelectronics.
+ * All rights reserved.
+ *
+ * This software is licensed under terms that can be found in the LICENSE file
+ * in the root directory of this software component.
+ * If no LICENSE file comes with this software, it is provided AS-IS.
+ *
+ ******************************************************************************
+ */
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
@@ -63,32 +63,33 @@ static void MX_TIM4_Init(void);
   * @brief  The application entry point.
   * @retval int
   */
-int main(void) {
+int main(void)
+{
 
-	/* USER CODE BEGIN 1 */
+  /* USER CODE BEGIN 1 */
 
-	/* USER CODE END 1 */
+  /* USER CODE END 1 */
 
-	/* MCU Configuration--------------------------------------------------------*/
+  /* MCU Configuration--------------------------------------------------------*/
 
-	/* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-	HAL_Init();
+  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
+  HAL_Init();
 
-	/* USER CODE BEGIN Init */
+  /* USER CODE BEGIN Init */
 
-	/* USER CODE END Init */
+  /* USER CODE END Init */
 
-	/* Configure the system clock */
-	SystemClock_Config();
+  /* Configure the system clock */
+  SystemClock_Config();
 
-	/* USER CODE BEGIN SysInit */
+  /* USER CODE BEGIN SysInit */
 
-	/* USER CODE END SysInit */
+  /* USER CODE END SysInit */
 
-	/* Initialize all configured peripherals */
-	MX_GPIO_Init();
-	MX_TIM4_Init();
-	/* USER CODE BEGIN 2 */
+  /* Initialize all configured peripherals */
+  MX_GPIO_Init();
+  MX_TIM4_Init();
+  /* USER CODE BEGIN 2 */
 	uint32_t button_press_time = 0;
 	uint32_t current_time = 0;
 
@@ -98,12 +99,14 @@ int main(void) {
 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_3);
 	HAL_TIM_PWM_Start(&htim4, TIM_CHANNEL_4);
 
-	/* USER CODE END 2 */
+  /* USER CODE END 2 */
 
-	/* Infinite loop */
-	/* USER CODE BEGIN WHILE */
+  /* Infinite loop */
+  /* USER CODE BEGIN WHILE */
 	while (1) {
+    /* USER CODE END WHILE */
 
+    /* USER CODE BEGIN 3 */
 		if (HAL_GPIO_ReadPin(GPIOA, GPIO_PIN_0) == GPIO_PIN_SET) {
 
 			if (button_press_time == 0) {
@@ -119,22 +122,19 @@ int main(void) {
 				htim4.Instance->CCR3 = 0;
 				htim4.Instance->CCR4 = 0;
 
-			}
-			else if (hold_duration >= 2000 && hold_duration < 4000) {
+			} else if (hold_duration >= 2000 && hold_duration < 4000) {
 				TIM_DC = 400;
 				htim4.Instance->CCR1 = 0;
 				htim4.Instance->CCR2 = 0;
 				htim4.Instance->CCR3 = TIM_DC;
 				htim4.Instance->CCR4 = TIM_DC;
-			}
-			else if (hold_duration >= 4000 && hold_duration < 6000) {
+			} else if (hold_duration >= 4000 && hold_duration < 6000) {
 				TIM_DC = 999;
 				htim4.Instance->CCR1 = TIM_DC;
 				htim4.Instance->CCR2 = TIM_DC;
 				htim4.Instance->CCR3 = TIM_DC;
 				htim4.Instance->CCR4 = TIM_DC;
-			}
-			else if (hold_duration >= 6000) {
+			} else if (hold_duration >= 6000) {
 				TIM_DC = 0;
 				htim4.Instance->CCR1 = TIM_DC;
 				htim4.Instance->CCR2 = TIM_DC;
@@ -142,16 +142,13 @@ int main(void) {
 				htim4.Instance->CCR4 = TIM_DC;
 			}
 
-
-		}
-		else {
+		} else {
 			if (button_press_time > 0) {
 				button_press_time = 0;
 			}
 		}
 	}
-
-	/* USER CODE END 3 */
+  /* USER CODE END 3 */
 }
 
 /**
@@ -420,11 +417,10 @@ static void MX_GPIO_Init(void)
 void Error_Handler(void)
 {
   /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
-  __disable_irq();
-  while (1)
-  {
-  }
+	/* User can add his own implementation to report the HAL error return state */
+	__disable_irq();
+	while (1) {
+	}
   /* USER CODE END Error_Handler_Debug */
 }
 
